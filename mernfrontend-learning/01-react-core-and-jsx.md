@@ -13,7 +13,7 @@ badge.innerText = 'Verified';
 badge.classList.add('bg-green-500');
 ```
 As applications grow with hundreds of interconnected components (doctor cards, live tokens, active queues, auth modals), manual DOM manipulation leads to:
-1. **State Synchronization Bugs**: Multiple parts of the DOM fall out of sync with application data.
+1. **[State Synchronization Bug](./helpher%2001/State%20Synchronization%20Bug.md)**: Multiple parts of the DOM fall out of sync with application data.
 2. **Poor Performance**: Direct DOM reads and writes cause **Layout Thrashing** (forced synchronous reflows & repaints).
 
 ### The React Declarative Paradigm
