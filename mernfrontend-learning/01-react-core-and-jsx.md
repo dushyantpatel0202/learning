@@ -13,11 +13,11 @@ badge.innerText = 'Verified';
 badge.classList.add('bg-green-500');
 ```
 As applications grow with hundreds of interconnected components (doctor cards, live tokens, active queues, auth modals), manual DOM manipulation leads to:
-1. **[State Synchronization Bug](./helpher%2001/State%20Synchronization%20Bug.md)**: Multiple parts of the DOM fall out of sync with application data.
-2. **Poor Performance**: Direct DOM reads and writes cause **Layout Thrashing** (forced synchronous reflows & repaints).
+1. **[State Synchronization Bug](./helpher%2001/State%20Synchronization%20Bug.md)**: Multiple parts of the DOM fall [out of sync](./helpher%2001/Stay%20in%20Sync%20and%20Out%20of%20Sync.md) with application data.
+2. **[Poor Performance](./helpher%2001/Layout%20Thrashing.md)**: Direct DOM reads and writes cause **[Layout Thrashing](./helpher%2001/Layout%20Thrashing.md)** ([forced synchronous reflows & repaints](./helpher%2001/Layout%20Thrashing.md#4-what-are-reflows-and-repaints)).
 
 ### The React Declarative Paradigm
-In React, you describe **WHAT** the UI should look like based on the current state. React takes care of the DOM updates:
+In React, you describe **WHAT** the UI should look like [based on state](./helpher%2001/f(state).md#3-what-does-based-on-state-mean) (**[UI = f(state)](./helpher%2001/f(state).md)**). React ensures the screen [stays in sync](./helpher%2001/Stay%20in%20Sync%20and%20Out%20of%20Sync.md) and takes care of the DOM updates automatically:
 ```jsx
 // React: Declarative (UI = f(State))
 <Badge verified={doctor.isVerified} />
@@ -200,3 +200,12 @@ In Production:
 ## 7. 💻 Hands-On Mastery Exercise
 
 Inspect `frontend/src/main.jsx`. Try temporarily removing `<StrictMode>` and putting a `console.log("App Mounted")` inside an effect in `frontend/src/App.jsx`. Observe how the logs behave in development!
+
+---
+
+## 📚 Helper 01 Companion Guides
+* 🐛 **[State Synchronization Bug](./helpher%2001/State%20Synchronization%20Bug.md)** — Complete breakdown of state drift and multi-badge updates.
+* ⚡ **[Layout Thrashing & Forced Reflow](./helpher%2001/Layout%20Thrashing.md)** — Deep-dive into DOM reads/writes, reflow, repaint, and VDOM batching.
+* 🔄 **[Stay in Sync, Out of Sync & Stale Data](./helpher%2001/Stay%20in%20Sync%20and%20Out%20of%20Sync.md)** — Core vocabulary, everyday analogies, and stale UI mechanics.
+* ⚡ **[UI = f(state) & Declarative UI](./helpher%2001/f(state).md)** — Mathematical foundation and component mental models.
+* 📑 **[Helper 01 Overview Notes](./helpher%2001/010.md)** — Summary glossary for Module 01 concepts.

@@ -85,9 +85,9 @@ function verifyDoctor() {
 | :--- | :--- | :--- | :---: |
 | **Profile Card** | `Verified` | ✅ Verified | Synced |
 | **Active Queue** | `Verified` | ✅ Verified | Synced |
-| **Appointment Modal** | `Verified` | ❌ **Not Verified** | ⚠️ **Out of Sync** |
+| **Appointment Modal** | `Verified` | ❌ **Not Verified** | ⚠️ [**Out of Sync**](./Stay%20in%20Sync%20and%20Out%20of%20Sync.md#3-out-of-sync) |
 
-> ⚠️ **The Issue:** The modal is now out of sync with the state. The data is correct, but one part of the UI is stale.
+> ⚠️ **The Issue:** The modal is now [out of sync](./Stay%20in%20Sync%20and%20Out%20of%20Sync.md#3-out-of-sync) with the state. The data is correct, but one part of the UI is [stale](./Stay%20in%20Sync%20and%20Out%20of%20Sync.md#4-what-stale-means-stale-vs-wrong).
 
 ---
 
@@ -144,7 +144,7 @@ React then re-renders all three badges because they all read from the same `doct
 
 > 📌 **A state synchronization bug** = you changed the data, but forgot to update every copy of it on the screen.  
 > 
-> 🛡️ **React prevents it** by making the UI a direct reflection of state, not a set of manual edits you have to keep in sync.
+> 🛡️ **React prevents it** by making the UI a direct reflection of state ([UI = f(state)](./f(state).md)), not a set of manual edits you have to keep [in sync](./Stay%20in%20Sync%20and%20Out%20of%20Sync.md#2-in-sync--stay-in-sync).
 
 ---
 
@@ -416,3 +416,10 @@ const [success, setSuccess] = useState(false);
 ```
 
 These values only control the modal's form and message, so the modal owns them. The parent owns `showBooking` because the parent decides whether the modal exists on screen. Keeping each state with the component responsible for that decision makes the relationship easier to follow.
+
+---
+
+### 🔗 Related Guides
+* 🔄 **[Stay in Sync, Out of Sync & Stale Data](./Stay%20in%20Sync%20and%20Out%20of%20Sync.md)** — Deep-dive into synchronization terms and analogies.
+* ⚡ **[UI = f(state) & Declarative UI](./f(state).md)** — Mathematical mental model of React rendering.
+* 📖 **[Module 01: React Core Architecture](../01-react-core-and-jsx.md)** — Main React Architecture curriculum.
