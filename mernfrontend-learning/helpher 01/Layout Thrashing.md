@@ -24,9 +24,9 @@ In Module 01, you encounter this core warning about plain JavaScript:
 > *"Direct DOM reads and writes cause **Layout Thrashing** (forced synchronous reflows & repaints)."*
 
 ### Plain Definition
-> **Layout Thrashing** occurs when JavaScript repeatedly alternates between **writing to the DOM** (mutating styles, widths, classes) and **reading from the DOM** (requesting dimensions, positions, offsets) in rapid succession.
+> **Layout Thrashing** occurs when JavaScript repeatedly alternates between **writing to the DOM** (mutating styles, widths, classes) and **reading from the DOM** (requesting dimensions, positions, or other layout values).
 
-```
+```text
 ❌ THE THRASHING CYCLE:
    Write to DOM ──► Dirty Layout ──► Read from DOM ──► FORCED REFLOW ──► Paint
         ▲                                                                    │
@@ -64,7 +64,7 @@ box1.style.width = '100px';
 box2.style.width = '200px';
 box3.style.width = '300px';
 ```
-The browser does **not** recalculate layout 3 times! It flags the layout as "dirty", places the changes in a queue, and executes **one single layout and repaint pass** at the end of the current frame (right before the 60Hz/120Hz screen refresh).
+The browser does **not** recalculate layout 3 times! It flags the layout as "dirty", places the changes in a queue, and executes **one single layout and repaint pass** at the end of the current frame.
 
 ---
 
@@ -92,7 +92,7 @@ const scroll = element.scrollTop;
 const rect = element.getBoundingClientRect();
 ```
 * **Effect:** The browser **must** provide you with the exact, 100% accurate pixel value at this exact millisecond.
-* If you previously performed a DOM write, the cached layout is dirty. The browser has **no choice**: it must pause your JavaScript execution and immediately run a **full synchronous layout calculation (Reflow)** right now!
+* If you previously performed a DOM write, the cached layout is dirty. The browser has **no choice**: it must pause your JavaScript execution and immediately run a **full synchronous layout calculation** before answering your read.
 
 ---
 
@@ -100,7 +100,7 @@ const rect = element.getBoundingClientRect();
 
 ### 1. Reflow (Layout)
 * **What it is:** The browser recalculating the exact positions and dimensions of elements.
-* **Why it is heavyweight:** The web is a flow-based document. Changing the width or font of one small box near the top can shift sibling elements, push footers down, wrap text onto new lines, and force the browser to recalculate the geometry of **thousands of elements** in the DOM tree.
+* **Why it is heavyweight:** The web is a flow-based document. Changing the width or font of one small box near the top can shift sibling elements, push footers down, wrap text onto new lines, and force a large part of the page to be recomputed.
 
 ### 2. Repaint (Paint)
 * **What it is:** Redrawing the visual pixels onto the screen (text colors, background fills, box shadows).
@@ -118,7 +118,7 @@ Under normal circumstances, Layout is **asynchronous** — it waits until the en
 
 **Forced Synchronous Layout** happens when you ask the browser for geometric layout data *after* you have modified the DOM, forcing the browser to perform layout **synchronously in the middle of JavaScript execution**.
 
-```
+```text
 Normal Flow:
   Write ➔ Write ➔ Write ➔ [JS Finishes] ➔ 1 Async Reflow ➔ 1 Async Paint ✅
 
@@ -173,7 +173,7 @@ cards.forEach((card) => {
 * **Smart Approach (Batched):**  
   The architect marks all 50 wall revisions on the master blueprint. Once finished, they hand the blueprint to the construction crew: *"Build these 50 walls."* The crew builds everything in one coordinated pass.
 * **Layout Thrashing:**  
-  The architect draws one brick, yells *"STOP! Re-survey the entire building's weight and balance!"* The crew surveys the whole skyscraper. The architect draws brick #2 and yells *"STOP! Re-survey the entire skyscraper again!"*
+  The architect draws one brick, yells *"STOP! Re-survey the entire building's weight and balance!"* The crew surveys the whole skyscraper. The architect draws brick #2 and yells *"STOP! Re-survey the whole building again!"* This wastes time and breaks flow.
 
 ### 2. The Restaurant Waiter and Kitchen
 * **Smart Approach:** The waiter takes all 6 orders at Table 4 on one notepad, walks to the kitchen once, and hands in the ticket.
@@ -253,11 +253,15 @@ function DoctorCardList({ cards, extraWidth }) {
 ```
 
 ### 2. Pure Render Phase (Zero DOM Thrashing)
-When you call `setExtraWidth(10)`:
+When you call `setExtraWidth(10)`: 
 * React runs the component functions in memory.
 * It builds a lightweight JavaScript tree (the Virtual DOM).
-* It computes the minimal diff (Reconciliation).
+* It compares the old tree and the new tree to find only the differences. This comparison is called **diffing**.
+* This whole process happens **in memory**, before touching the browser DOM.
 * **No browser DOM properties are queried or mutated during this calculation.**
+
+> 🧠 What does “diffing virtual DOM in memory” mean?  
+> It means React creates a fake JavaScript version of the UI, compares the old version and the new version in JavaScript, and figures out exactly what changed — without reading or writing the real browser page yet. It is like comparing two lists in memory before making any real edits.
 
 ### 3. Unified Commit Phase
 * React Fiber aggregates every required DOM change.
