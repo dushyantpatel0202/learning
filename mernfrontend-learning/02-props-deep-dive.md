@@ -76,6 +76,67 @@ function DoctorCard(props) {
 
 So the child is not reading a global variable. It is reading the value passed in from the parent.
 
+### Beginner note: `import/export` is not the same as `props`
+
+This is a very common beginner confusion.
+
+- `import DoctorCard from './DoctorCard'` means: "Load the child component file so I can use it here."
+- `doctor={doctor}` means: "Send the doctor object into the child component."
+
+So:
+
+```jsx
+import DoctorCard from './DoctorCard';
+```
+
+is about file/module connection.
+
+```jsx
+<DoctorCard doctor={doctor} />
+```
+
+is about passing data into the component.
+
+The parent usually imports the child, but the child does not import the parent. The parent passes values through props.
+
+### Beginner note: why we use `doctor` inside `.map()` and not `doctors`
+
+In this code:
+
+```jsx
+{doctors.map((doctor) => (
+  <DoctorCard key={doctor.id} doctor={doctor} />
+))}
+```
+
+- `doctors` is the full array.
+- `doctor` is one single object from that array.
+- The callback runs once for every item in the array.
+
+So JavaScript does something like this:
+
+```jsx
+for (const doctor of doctors) {
+  // doctor = one object at a time
+}
+```
+
+That is why we write:
+
+```jsx
+doctor.name
+doctor.id
+doctor.specialization
+```
+
+and not:
+
+```jsx
+doctors.name
+```
+
+because `doctors` is the whole list, not a single item.
+
 ---
 
 ## 2) Destructuring with default values
@@ -286,7 +347,7 @@ If asked: "How do props pass from one file to another in React?"
 
 Answer:
 
-> In React, a parent component passes values to a child component using JSX attributes. The child receives them as function parameters or as `props`. The child can then destructure the values and render them.
+> In React, a parent component passes values to a child component using JSX attributes. The child receives them as function parameters or as `props`. The child can then destructure the values and use them directly.
 
 ---
 
