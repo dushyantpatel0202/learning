@@ -137,6 +137,51 @@ doctors.name
 
 because `doctors` is the whole list, not a single item.
 
+### Beginner note: you can use any variable name in `.map()`
+
+The name inside the callback is just a local variable. You do not have to use `doctor`.
+
+For example, this also works:
+
+```jsx
+{doctors.map((professional) => (
+  <DoctorCard key={professional.id} doctor={professional} />
+))}
+```
+
+Here:
+
+- `professional` is the item from the array
+- `doctor={professional}` is the prop name being passed to the child
+
+The child can still receive it like this:
+
+```jsx
+export default function DoctorCard({ doctor }) {
+  return <h3>{doctor.name}</h3>;
+}
+```
+
+So the variable name inside `.map()` is flexible, but the prop name must match how the child expects it.
+
+If you want to keep the prop name and variable name consistent, this is also valid:
+
+```jsx
+{doctors.map((professional) => (
+  <DoctorCard key={professional.id} professional={professional} />
+))}
+```
+
+Then the child would receive:
+
+```jsx
+export default function DoctorCard({ professional }) {
+  return <h3>{professional.name}</h3>;
+}
+```
+
+This is perfectly valid JavaScript and React.
+
 ---
 
 ## 2) Destructuring with default values
