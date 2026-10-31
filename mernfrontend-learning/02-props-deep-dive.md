@@ -286,7 +286,7 @@ If asked: "How do props pass from one file to another in React?"
 
 Answer:
 
-> In React, a parent component passes values to a child component using JSX attributes. The child receives them as function parameters or as `props`. The child can then destructure the values and render them. This is called unidirectional data flow, where data moves from parent to child.
+> In React, a parent component passes values to a child component using JSX attributes. The child receives them as function parameters or as `props`. The child can then destructure the values and render them.
 
 ---
 
