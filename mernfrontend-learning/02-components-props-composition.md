@@ -89,6 +89,9 @@ export function Card({ className = '', children }) {
   );
 }
 ```
+
+> Helper note: For a deeper walkthrough of `children`, composition, and slot props, see [React `children`, Composition, and Slot Props](./helpher%2001/01-children-composition.md).
+
 Any component can wrap arbitrary content inside `<Card>` without `<Card>` needing to know what is inside:
 ```jsx
 <Card className="shadow-sm">
@@ -195,7 +198,7 @@ export default function DoctorCard({ doctor }) {
 ### The "Prop Drilling Explosion" in Multi-Step Forms
 **Scenario**: In a hospital management system, patient registration had 5 nested layers:
 `RegistrationWizard -> StepThree -> BillingSection -> InsuranceForm -> InsuranceCardInput`.
-The developer passed down `patientData`, `setPatientData`, `currency`, `userRole`, and `theme` through every single intermediate component, even though `StepThree` and `BillingSection` never used those props.
+The developer passed down `patientData`, `setPatientData`, `currency`, `userRole`, and `theme` through every single intermediate component, even though `StepThree` and `BillingSection` never used those properties.
 
 **What Went Wrong**:
 When the shape of `userRole` changed, 5 separate files broke. Renaming a prop required manual refactoring across all 5 levels.
@@ -222,7 +225,7 @@ When the shape of `userRole` changed, 5 separate files broke. Renaming a prop re
 
 ### Q3: Why can’t we mutate props directly? (e.g., `props.total += 10`)
 > **Answer**:
-> React relies on pure functions and shallow comparison of objects for reconciliation. If you mutate `props.total`, the reference to the parent's state object might remain the same, causing React to miss re-renders, or worse, mutate state outside of React's batched update cycle, creating unpredictable rendering bugs.
+> React relies on pure functions and shallow comparison of objects for reconciliation. If you mutate `props.total`, the reference to the parent's state object might remain the same, causing React to not re-render as expected.
 
 ### Q4: Code Output & Concept Check
 **What will be displayed on the screen?**
