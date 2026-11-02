@@ -28,7 +28,7 @@ $$\text{UI} = f(\text{props}, \text{state})$$
 
 ---
 
-## 2. 🧩 [Props Deep-Dive](./02-props-deep-dive.md)
+## 2. 🧩 [Props Deep-Dive](./helpher%2001/02-props-deep-dive.md)
 
 This section explains how props are passed between components and how a child receives them.
 
@@ -102,7 +102,7 @@ Any component can wrap arbitrary content inside `<Card>` without `<Card>` needin
 
 ---
 
-## 4. 🏥 Real Project Code Walkthrough: `Avatar` & Fallback Handling
+## 4. 🏥 [Real Project Code Walkthrough: `Avatar` & Fallback Handling](./helpher%2001/02-avatar-fallback-handling.html)
 
 Look at how our Doctor App handles doctor profile pictures in `frontend/src/components/ui.jsx`:
 
@@ -119,9 +119,9 @@ export function Avatar({ src, name, width = 200, className = '' }) {
   // Fallback state: if no image URL was given, or image network request failed
   if (!src || failedSrc === src) {
     return (
-      <div 
-        role="img" 
-        aria-label={name} 
+      <div
+        role="img"
+        aria-label={name}
         className={`flex items-center justify-center bg-brand/15 font-serif font-bold text-brand ${className}`}
       >
         {initials(name)}
@@ -141,14 +141,13 @@ export function Avatar({ src, name, width = 200, className = '' }) {
 }
 ```
 
-### Why this is production-grade:
-1. **Graceful Degradation (`onError`)**: If a doctor’s Cloudinary image URL returns a 404 or fails to load, `setFailedSrc(src)` switches the UI to the doctor's initials badge.
+### Why this is production-grade
+
+1. **Graceful degradation (`onError`)**: If a doctor’s Cloudinary image URL returns a 404 or fails to load, `setFailedSrc(src)` switches the UI to the doctor's initials badge.
 2. **Accessibility**: Uses `role="img"` and `aria-label={name}` for screen readers when rendering the fallback initials container.
 3. **Performance**: Takes a `width` prop to let Cloudinary transform and downscale the image dynamically, saving mobile bandwidth.
 
----
-
-## 5. 🏥 Real Project Code Walkthrough: `DoctorCard.jsx`
+## 5. 🏥 [Real Project Code Walkthrough: `DoctorCard.jsx`](./helpher%2001/03-doctor-card-walkthrough.md)
 
 Look at how `DoctorCard.jsx` breaks down complex logic into small, focused subcomponents:
 

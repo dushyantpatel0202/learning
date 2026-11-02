@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A step-by-step React lesson on avatar image fallback handling.">
+  <title>Avatar Fallback Handling | MERN Frontend Learning</title>
+  <style>
+    :root { color-scheme: light; --ink:#252b36; --muted:#687386; --line:#e7eaf0; --accent:#3267d5; --paper:#fff; --canvas:#f5f7fb; --code:#172033; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--canvas); color:var(--ink); font:16px/1.75 Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+    .topbar { height:58px; display:flex; align-items:center; padding:0 max(22px,calc((100vw - 920px)/2)); background:var(--paper); border-bottom:1px solid var(--line); color:var(--muted); font-size:14px; }
+    .topbar a { color:var(--accent); text-decoration:none; font-weight:650; }
+    main { max-width:820px; margin:42px auto 80px; padding:54px 64px 72px; background:var(--paper); border:1px solid var(--line); border-radius:18px; box-shadow:0 14px 44px #2735500d; }
+    h1,h2,h3 { line-height:1.3; letter-spacing:-.025em; color:#182235; }
+    h1 { font-size:clamp(2rem,5vw,2.65rem); margin:0 0 20px; }
+    h2 { font-size:1.55rem; margin:2.5em 0 .75em; padding-bottom:.45em; border-bottom:1px solid var(--line); }
+    h3 { font-size:1.15rem; margin:1.8em 0 .5em; }
+    p { margin:1em 0; }
+    strong { color:#182235; }
+    a { color:var(--accent); }
+    code { padding:.16em .38em; border-radius:5px; background:#eff2f8; color:#99412d; font: .9em ui-monospace, SFMono-Regular, Consolas, monospace; }
+    pre { overflow:auto; margin:1.25em 0; padding:22px 24px; border-radius:12px; background:var(--code); color:#e9effa; line-height:1.65; box-shadow:inset 0 1px #ffffff12; }
+    pre code { padding:0; background:none; color:inherit; font-size:.88rem; }
+    ul,ol { padding-left:1.5rem; }
+    li { padding-left:.25rem; margin:.35em 0; }
+    li::marker { color:var(--accent); }
+    .table-wrap { overflow-x:auto; margin:1.25em 0; border:1px solid var(--line); border-radius:10px; }
+    table { width:100%; border-collapse:collapse; text-align:left; }
+    th,td { padding:12px 16px; border-bottom:1px solid var(--line); }
+    th { background:#f8f9fc; font-weight:650; }
+    tr:last-child td { border-bottom:0; }
+    @media(max-width:700px) { main { margin:16px 10px 36px; padding:32px 22px 44px; border-radius:13px; } .topbar { padding:0 18px; } }
+  </style>
+</head>
+<body>
+  <header class="topbar"><a href="../02-components-props-composition.md">MERN Frontend Learning</a><span>&nbsp; / &nbsp; Helper lesson</span></header>
+  <main>
+    <h1 id="avatar-fallback-handling-a-step-by-step-react-walkthrough">Avatar Fallback Handling: A Step-by-Step React Walkthrough</h1>
+    <p>This lesson follows the <code>Avatar</code> component used for doctor profile pictures. If the image loads, the component displays it. If the URL is missing or the image request fails, it displays the doctor's initials instead. This is <strong>fallback handling</strong>: providing an alternative when the primary resource is unavailable.</p>
+    <h2 id="1-what-the-user-sees">1. What the user sees</h2>
+    <div class="table-wrap"><table><thead><tr><th>Doctor</th><th>Image result</th><th>UI</th></tr></thead><tbody><tr><td>Dr. Rahul Sharma</td><td>Image loads</td><td>Profile photo</td></tr><tr><td>Dr. Amit Patel</td><td>Image fails</td><td>Initials <code>AP</code></td></tr></tbody></table></div>
+    <p>The fallback avoids a broken-image icon and keeps the avatar useful in the layout.</p>
+    <h2 id="2-generate-initials-from-a-name">2. Generate initials from a name</h2>
+    <pre><code class="language-js">function initials(name = '') {
+  const words = name
+    .replace(/^dr\.?\s+/i, '')
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean);
+
+  return (
+    (words[0]?.[0] || 'D') +
+    (words[1]?.[0] || '')
+  ).toUpperCase();
+}</code></pre>
+    <p>The function removes an optional <code>Dr</code> prefix, splits the remaining name into words, takes the first character of the first two words, and converts the result to uppercase.</p>
+    <div class="table-wrap"><table><thead><tr><th>Input</th><th>Result</th></tr></thead><tbody><tr><td><code>Dr. Rahul Sharma</code></td><td><code>RS</code></td></tr><tr><td><code>Dr Amit Patel</code></td><td><code>AP</code></td></tr><tr><td><code>Priya Verma</code></td><td><code>PV</code></td></tr><tr><td><code>Rahul</code></td><td><code>R</code></td></tr><tr><td>No name</td><td><code>D</code></td></tr></tbody></table></div>
+    <p><code>name = ''</code> is a JavaScript default parameter. It supplies an empty string if no argument is passed. The regular expression <code>/^dr\.?\s+/i</code> matches <code>Dr</code> or <code>Dr.</code> at the beginning of the string, followed by whitespace. <code>^</code> means start of string, <code>\.?</code> means an optional period, <code>\s+</code> means one or more whitespace characters, and <code>i</code> makes the match case-insensitive.</p>
+    <p><code>trim()</code> removes whitespace at both ends. <code>split(/\s+/)</code> divides the name into words. <code>filter(Boolean)</code> removes empty strings that could result from repeated whitespace:</p>
+    <pre><code class="language-js">['Rahul', '', 'Sharma'].filter(Boolean);
+// ['Rahul', 'Sharma']</code></pre>
+    <p>JavaScript arrays start at index zero, so <code>words[0]</code> is the first word. <code>words[0]?.[0]</code> safely reads its first character. Optional chaining returns <code>undefined</code> if the word is missing instead of throwing. The <code>||</code> operator supplies a fallback character if the value is empty or missing. For <code>Dr. Rahul Sharma</code>, the words are <code>['Rahul', 'Sharma']</code>, so the result is <code>RS</code>.</p>
+    <h2 id="3-the-avatar-component-and-its-props">3. The Avatar component and its props</h2>
+    <pre><code class="language-jsx">export function Avatar({ src, name, width = 200, className = '' }) {
+  // component body
+}</code></pre>
+    <div class="table-wrap"><table><thead><tr><th>Prop</th><th>Purpose</th><th>Default</th></tr></thead><tbody><tr><td><code>src</code></td><td>Doctor's image URL</td><td>None</td></tr><tr><td><code>name</code></td><td>Doctor's name and image description</td><td>None</td></tr><tr><td><code>width</code></td><td>Requested image transformation width</td><td><code>200</code></td></tr><tr><td><code>className</code></td><td>Additional CSS classes</td><td>Empty string</td></tr></tbody></table></div>
+    <p>Example:</p>
+    <pre><code class="language-jsx">&lt;Avatar
+  src={doctor.photoUrl}
+  name={doctor.name}
+  width={100}
+  className=&quot;size-12 rounded-full&quot;
+/&gt;</code></pre>
+    <p><code>width = 200</code> and <code>className = ''</code> are JavaScript destructuring defaults, not React-specific syntax.</p>
+    <h2 id="4-remember-which-image-url-failed">4. Remember which image URL failed</h2>
+    <pre><code class="language-jsx">const [failedSrc, setFailedSrc] = useState(null);</code></pre>
+    <p>Initially, <code>failedSrc</code> is <code>null</code> because no image failure has been recorded. When an image fails, the component saves its URL in state. Updating state makes React render the component again.</p>
+    <ol><li>The component renders with <code>failedSrc</code> set to <code>null</code>.</li><li>The browser tries to load the image.</li><li>If loading fails, <code>onError</code> stores the URL with <code>setFailedSrc(src)</code>.</li><li>React re-renders with the updated state.</li><li>The component displays the initials fallback.</li></ol>
+    <h2 id="5-decide-whether-to-show-initials-or-an-image">5. Decide whether to show initials or an image</h2>
+    <pre><code class="language-jsx">if (!src || failedSrc === src) {
+  // render initials fallback
+}</code></pre>
+    <p><code>!src</code> is true when the URL is missing or empty. <code>failedSrc === src</code> is true when this exact URL has already failed. Saving the URL instead of a boolean matters if the parent later supplies a new URL: the component can try the new image while remembering that the old one failed.</p>
+    <h2 id="6-render-the-accessible-initials-fallback">6. Render the accessible initials fallback</h2>
+    <pre><code class="language-jsx">return (
+  &lt;div
+    role=&quot;img&quot;
+    aria-label={name}
+    className={`flex items-center justify-center bg-brand/15 font-serif font-bold text-brand ${className}`}
+  &gt;
+    {initials(name)}
+  &lt;/div&gt;
+);</code></pre>
+    <ul><li><code>role=&quot;img&quot;</code> tells assistive technology that this <code>div</code> represents an image-like item.</li><li><code>aria-label={name}</code> supplies a text label for the fallback.</li><li>The Tailwind classes center and style the initials.</li><li><code>${className}</code> lets the parent set the avatar's size and shape.</li><li><code>{initials(name)}</code> calls the helper and renders its result.</li></ul>
+    <h2 id="7-render-the-image-and-handle-failures">7. Render the image and handle failures</h2>
+    <pre><code class="language-jsx">return (
+  &lt;img
+    src={optimizeImage(src, width)}
+    alt={name}
+    loading=&quot;lazy&quot;
+    onError={() =&gt; setFailedSrc(src)}
+    className={`object-cover ${className}`}
+  /&gt;
+);</code></pre>
+    <p><code>optimizeImage(src, width)</code> is a project helper that can request an appropriately sized Cloudinary image. Resizing an image for its display size can avoid downloading a much larger original; the exact transformation depends on the helper and Cloudinary configuration.</p>
+    <p><code>alt={name}</code> supplies alternative text. <code>loading=&quot;lazy&quot;</code> lets the browser defer loading images until they are near the visible area, which can help pages with many doctor cards.</p>
+    <p>The browser fires <code>onError</code> if the image cannot load, for example if the URL returns an error, the network request fails, or the file is invalid. The handler saves the source:</p>
+    <pre><code class="language-jsx">onError={() =&gt; setFailedSrc(src)}</code></pre>
+    <p>On the next render, <code>failedSrc === src</code> is true, so the component returns the initials instead of the broken image.</p>
+    <h2 id="8-complete-component-example">8. Complete component example</h2>
+    <pre><code class="language-jsx">import { useState } from 'react';
+
+function initials(name = '') {
+  const words = name
+    .replace(/^dr\.?\s+/i, '')
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean);
+
+  return (
+    (words[0]?.[0] || 'D') +
+    (words[1]?.[0] || '')
+  ).toUpperCase();
+}
+
+export function Avatar({ src, name, width = 200, className = '' }) {
+  const [failedSrc, setFailedSrc] = useState(null);
+
+  if (!src || failedSrc === src) {
+    return (
+      &lt;div
+        role=&quot;img&quot;
+        aria-label={name}
+        className={`flex items-center justify-center bg-brand/15 font-serif font-bold text-brand ${className}`}
+      &gt;
+        {initials(name)}
+      &lt;/div&gt;
+    );
+  }
+
+  return (
+    &lt;img
+      src={optimizeImage(src, width)}
+      alt={name}
+      loading=&quot;lazy&quot;
+      onError={() =&gt; setFailedSrc(src)}
+      className={`object-cover ${className}`}
+    /&gt;
+  );
+}</code></pre>
+    <p>In the project, <code>optimizeImage</code> must also be imported or defined in this module.</p>
+    <h2 id="9-check-your-understanding">9. Check your understanding</h2>
+    <ol><li>What is the initial value of <code>failedSrc</code>? <strong><code>null</code>; no failed URL has been recorded.</strong></li><li>What happens after an image fails? <strong><code>onError</code> updates state, React re-renders, and the fallback is shown.</strong></li><li>Why compare <code>failedSrc === src</code>? <strong>A new URL can still be tried after an older URL failed.</strong></li><li>What does <code>loading=&quot;lazy&quot;</code> do? <strong>It lets the browser defer off-screen image loading.</strong></li></ol>
+    <h2 id="key-takeaways">Key takeaways</h2>
+    <p>This component combines string processing, array methods, optional chaining, props, state, conditional rendering, event handling, accessibility, and image optimization. The central idea is that an image failure is represented in React state, so the UI can respond predictably instead of showing a broken image.</p>
+  </main>
+</body>
+</html>
