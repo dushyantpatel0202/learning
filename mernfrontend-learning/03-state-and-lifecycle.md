@@ -13,7 +13,7 @@ Updating state triggers a **Re-render**:
 
 ---
 
-## 2. 🔬 `useState` Deep-Dive
+## 2. 🔬 `useState` Deep-Dive ([read the detailed explanation](helpher%2001/02-useState-deep-dive.md))
 
 ### 1. The Anatomy of `useState`
 ```javascript
