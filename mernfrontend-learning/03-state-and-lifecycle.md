@@ -13,7 +13,7 @@ Updating state triggers a **Re-render**:
 
 ---
 
-## 2. 🔬 `useState` Deep-Dive ([read the detailed explanation](helpher%2001/02-useState-deep-dive.md))
+## 2. 🔬 `useState` Deep-Dive ([read the detailed explanation](./03-state-and-lifecycle/02-useState-deep-dive.md))
 
 ### 1. The Anatomy of `useState`
 ```javascript
@@ -78,7 +78,7 @@ const [user, setUser] = useState(() => {
 
 ---
 
-## 3. 🔄 Updating Objects & Arrays (The Immutability Rule)
+## 3. 🔄 [Updating Objects & Arrays (The Immutability Rule)](./03-state-and-lifecycle/03-updating-objects-and-arrays.md)
 
 Never mutate an object or array directly in state:
 ```javascript
@@ -97,7 +97,7 @@ setDoctors(prev => prev.map(doc =>
 
 ---
 
-## 4. ⚡ `useEffect` Deep-Dive & The Component Lifecycle
+## 4. ⚡ [`useEffect` Deep-Dive & The Component Lifecycle](./03-state-and-lifecycle/04-useEffect-deep-dive-lifecycle.md)
 
 A **Side Effect** is any operation that reaches outside the pure React rendering process (e.g., fetching data from an API, subscribing to WebSockets, setting browser titles, reading geolocation).
 
@@ -278,3 +278,12 @@ function Counter() {
 ## 8. 💻 Hands-On Mastery Exercise
 
 Look at `fetchDoctors` in `frontend/src/pages/Home.jsx`. Refactor it to handle component unmounting and rapid search typing using `AbortController` as shown in Section 6.
+
+---
+
+## 📚 Module 03 Companion Guides
+* 🔬 **[`useState` Deep-Dive](./03-state-and-lifecycle/02-useState-deep-dive.md)** — State snapshots, batched queuing, and functional setters.
+* 📦 **[Updating Objects & Arrays (The Immutability Rule)](./03-state-and-lifecycle/03-updating-objects-and-arrays.md)** — Shallow vs deep copies, memory references, and Immer.
+  * 🌐 **[State, References & the UI (Interactive Visual Study Chapter)](./03-state-and-lifecycle/03-updating-objects-and-arrays/react-state-object-references-study-chapter.html)** — Interactive study module for object identity and `Object.is()`.
+* ⚡ **[`useEffect` Deep-Dive & The Component Lifecycle](./03-state-and-lifecycle/04-useEffect-deep-dive-lifecycle.md)** — Cleanup cycles, abort signals, and execution order.
+  * 🎮 **[`useEffect` vs `useLayoutEffect` (Interactive Visual Simulator)](./03-state-and-lifecycle/04-useEffect-deep-dive-lifecycle/Useeffect-Vs-Uselayouteffect.html)** — Live rendering and painting pipeline simulator.

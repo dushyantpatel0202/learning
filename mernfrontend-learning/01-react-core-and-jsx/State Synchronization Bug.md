@@ -1,4 +1,4 @@
-# 🐛 State Synchronization Bug — Explained with Code
+﻿# 🐛 State Synchronization Bug — Explained with Code
 
 ## 📌 What It Means
 
@@ -144,7 +144,7 @@ React then re-renders all three badges because they all read from the same `doct
 
 > 📌 **A state synchronization bug** = you changed the data, but forgot to update every copy of it on the screen.  
 > 
-> 🛡️ **React prevents it** by making the UI a direct reflection of state ([UI = f(state)](./f(state).md)), not a set of manual edits you have to keep [in sync](./Stay%20in%20Sync%20and%20Out%20of%20Sync.md#2-in-sync--stay-in-sync).
+> 🛡️ **React prevents it** by making the UI a direct reflection of state ([UI = f(state)](./f%28state%29.md)), not a set of manual edits you have to keep [in sync](./Stay%20in%20Sync%20and%20Out%20of%20Sync.md#2-in-sync--stay-in-sync).
 
 ---
 
@@ -421,5 +421,5 @@ These values only control the modal's form and message, so the modal owns them. 
 
 ### 🔗 Related Guides
 * 🔄 **[Stay in Sync, Out of Sync & Stale Data](./Stay%20in%20Sync%20and%20Out%20of%20Sync.md)** — Deep-dive into synchronization terms and analogies.
-* ⚡ **[UI = f(state) & Declarative UI](./f(state).md)** — Mathematical mental model of React rendering.
+* ⚡ **[UI = f(state) & Declarative UI](./f%28state%29.md)** — Mathematical mental model of React rendering.
 * 📖 **[Module 01: React Core Architecture](../01-react-core-and-jsx.md)** — Main React Architecture curriculum.

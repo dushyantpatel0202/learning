@@ -202,3 +202,10 @@ setCount(previous => previous + 1);
 ```
 
 That difference—**a render snapshot versus a queued update based on the previous value**—is the key idea behind reliable `useState` code.
+
+---
+
+### Navigation
+* 📖 **[Module 03: State Management & Lifecycle](../03-state-and-lifecycle.md)**
+* 📦 **[Updating Objects & Arrays](./03-updating-objects-and-arrays.md)**
+* ⚡ **[`useEffect` Deep-Dive & The Component Lifecycle](./04-useEffect-deep-dive-lifecycle.md)**

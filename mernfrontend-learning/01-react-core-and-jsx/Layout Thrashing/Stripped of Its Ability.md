@@ -54,4 +54,5 @@ That is why the browser is no longer “smart” about batching; it becomes reac
 
 ## Back to the main guide
 
-[Go back to Layout Thrashing](./Layout%20Thrashing.md)
+* ⚡ [Go back to Layout Thrashing Guide](../Layout%20Thrashing.md)
+* 📖 [Module 01: React Core Architecture](../../01-react-core-and-jsx.md)

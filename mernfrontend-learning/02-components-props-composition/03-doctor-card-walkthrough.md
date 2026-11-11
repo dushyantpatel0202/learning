@@ -332,3 +332,10 @@ This example assumes `doctor` and `doctor.name` exist, and that each charge has 
 5. Why use `...` in `Math.min(...fees)`? **To pass array values as separate arguments to `Math.min()`.**
 
 Try explaining `pop()`, optional chaining, `map()`, and spread syntax without reading the answers. These JavaScript patterns appear throughout React applications.
+
+---
+
+### Navigation
+* 📖 **[Module 02: Components, Props & Composition](../02-components-props-composition.md)**
+* 🧩 **[Props Deep-Dive](./02-props-deep-dive.md)**
+* 📦 **[React `children`, Composition, and Slot Props](./01-children-composition.md)**

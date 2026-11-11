@@ -5,7 +5,7 @@ This file explains the two topics covered under the Props Deep-Dive section:
 1. Destructuring with default values
 2. Passing callbacks from child to parent
 
-This is the detailed companion to the main lesson in [02-components-props-composition.md](./02-components-props-composition.md).
+This is the detailed companion to the main lesson in [02-components-props-composition.md](../02-components-props-composition.md).
 
 ---
 

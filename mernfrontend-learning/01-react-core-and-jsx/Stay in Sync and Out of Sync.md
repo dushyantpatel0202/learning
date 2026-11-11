@@ -1,4 +1,4 @@
-# 🔄 Stay in Sync, Out of Sync & Stale Data — Explained with Code
+﻿# 🔄 Stay in Sync, Out of Sync & Stale Data — Explained with Code
 
 ---
 
@@ -147,7 +147,7 @@ In React, you never manually update DOM nodes element-by-element. Instead, you d
 
 $$\text{UI} = f(\text{state})$$
 
-*(See full breakdown: **[UI = f(state) & Declarative UI](./f(state).md)**)*
+*(See full breakdown: **[UI = f(state) & Declarative UI](./f%28state%29.md)**)*
 
 ```jsx
 // React Component: Single source of truth
@@ -190,5 +190,5 @@ function DoctorBadge({ isVerified }) {
 
 ### 🔗 Related Guides
 * 🐛 **[State Synchronization Bug](./State%20Synchronization%20Bug.md)** — Deep-dive with code and multi-component walkthrough.
-* ⚡ **[UI = f(state) & Declarative UI](./f(state).md)** — Why declarative architecture prevents sync bugs.
+* ⚡ **[UI = f(state) & Declarative UI](./f%28state%29.md)** — Why declarative architecture prevents sync bugs.
 * 📖 **[Module 01: React Core Architecture](../01-react-core-and-jsx.md)** — Back to the main roadmap module.

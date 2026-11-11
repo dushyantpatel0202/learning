@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="A beginner-friendly, offline study chapter about React state, JavaScript object identity, immutable updates, Object.is, rendering, and garbage collection.">
+<title>React State & Object References — Study Chapter</title>
+<style>
+:root{--ink:#17243a;--muted:#58677c;--paper:#fff;--bg:#f2f5f9;--line:#dce4ee;--blue:#2359b8;--blue-soft:#eaf1ff;--teal:#087e79;--teal-soft:#e5f6f3;--amber:#a85a00;--amber-soft:#fff3df;--red:#a43e48;--red-soft:#fff0f0;--shadow:0 12px 35px #26395712;--code:#101a2a}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.7 system-ui,-apple-system,"Segoe UI",sans-serif}a{color:var(--blue)}.wrap{max-width:1120px;margin:auto;padding:28px 22px 70px}.hero{background:linear-gradient(130deg,#142a50,#2459a5 65%,#138d88);color:white;border-radius:24px;padding:clamp(30px,6vw,70px);box-shadow:var(--shadow);position:relative;overflow:hidden}.hero:after{content:"{}";position:absolute;font:900 170px/1 ui-monospace,monospace;right:4%;bottom:-30px;opacity:.09}.eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:.75rem;font-weight:750;opacity:.82}.hero h1{font-size:clamp(2.2rem,5vw,4rem);line-height:1.08;margin:.45em 0}.hero p{max-width:690px;color:#e2ecff;font-size:1.12rem}.pills{display:flex;gap:9px;flex-wrap:wrap;margin-top:24px}.pill{border:1px solid #ffffff55;border-radius:999px;padding:5px 12px;font-size:.85rem}.layout{display:grid;grid-template-columns:230px minmax(0,1fr);gap:24px;margin-top:24px;align-items:start}.toc,.card,article{background:var(--paper);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}.toc{position:sticky;top:18px;padding:18px}.toc strong{display:block;margin:0 0 10px}.toc a{display:block;text-decoration:none;color:var(--muted);padding:5px 8px;border-radius:8px;font-size:.9rem}.toc a:hover{background:var(--blue-soft);color:var(--blue)}main{min-width:0}article{padding:clamp(20px,4vw,42px);margin-bottom:20px}h2{font-size:1.75rem;line-height:1.25;margin:0 0 16px;letter-spacing:-.02em}h3{font-size:1.17rem;margin:26px 0 8px}p{margin:.65em 0}li{padding-left:3px}ul,ol{padding-left:1.35rem}.lead{font-size:1.08rem;color:#34445a}.callout{border-left:4px solid var(--blue);background:var(--blue-soft);padding:14px 18px;border-radius:0 12px 12px 0;margin:18px 0}.callout.good{border-color:var(--teal);background:var(--teal-soft)}.callout.warn{border-color:var(--amber);background:var(--amber-soft)}.callout.bad{border-color:var(--red);background:var(--red-soft)}.diagram{border:1px solid var(--line);border-radius:15px;background:#f8fafd;padding:20px;margin:20px 0;overflow:auto}.diagram-title{font-weight:750;margin:0 0 14px}.boxes{display:flex;align-items:center;justify-content:center;gap:12px;min-width:460px}.box{padding:12px 16px;border:2px solid #9ab6e8;background:#edf3ff;border-radius:12px;text-align:center;min-width:145px}.box.object{border-color:#72c3b8;background:#e7f7f3}.box b{display:block}.arrow{font-size:1.5rem;color:var(--blue)}.twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px}.mini{border:1px solid var(--line);border-radius:13px;padding:16px}.mini h3{margin:0 0 8px}.tag{display:inline-block;border-radius:6px;padding:1px 7px;font-size:.77rem;font-weight:750;background:var(--teal-soft);color:var(--teal)}.tag.same{background:var(--amber-soft);color:var(--amber)}pre{background:var(--code);color:#e8efff;padding:18px;border-radius:13px;overflow:auto;font: .89rem/1.6 ui-monospace,SFMono-Regular,Consolas,monospace;tab-size:2;margin:14px 0}code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}p code,li code{background:#eef2f7;padding:2px 5px;border-radius:5px;color:#263d61}.comment{color:#96a9c9}.kw{color:#c5a6ff}.str{color:#a7e5b7}.num{color:#ffc979}.table-wrap{overflow:auto}table{border-collapse:collapse;width:100%;margin:14px 0}th,td{padding:11px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{background:#f3f6fa}.steps{counter-reset:s}.step{position:relative;padding:3px 0 14px 46px}.step:before{counter-increment:s;content:counter(s);position:absolute;left:0;top:0;width:31px;height:31px;display:grid;place-items:center;border-radius:50%;background:var(--blue-soft);color:var(--blue);font-weight:800}.quiz details{border:1px solid var(--line);border-radius:12px;margin:12px 0;padding:12px 15px;background:#fff}.quiz summary{font-weight:700;cursor:pointer}.quiz details p{margin-bottom:0}.footer{text-align:center;color:var(--muted);font-size:.9rem;padding:18px}.label{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:800}
+@media(max-width:800px){.layout{grid-template-columns:1fr}.toc{position:static}.toc nav{display:grid;grid-template-columns:1fr 1fr;gap:2px}.twocol{grid-template-columns:1fr}.hero:after{font-size:110px;right:1%}.wrap{padding:14px 12px 45px}}@media(max-width:440px){body{font-size:15px}.toc nav{grid-template-columns:1fr}.boxes{min-width:410px}.hero{border-radius:17px}}
+@media print{body{background:white}.wrap{max-width:none;padding:0}.hero,article,.toc{box-shadow:none}.layout{display:block}.toc{display:none}article{break-inside:avoid;margin:12px 0}.hero{background:#1c3d72!important;print-color-adjust:exact}.diagram,pre{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div style="margin-bottom:16px;font-size:14px;color:var(--muted);"><a href="../03-updating-objects-and-arrays.md" style="font-weight:700;text-decoration:none;">← Back to Updating Objects & Arrays Guide</a> &nbsp;|&nbsp; <a href="../../03-state-and-lifecycle.md" style="color:var(--muted);text-decoration:none;">Module 03: State Management</a></div>
+<header class="hero">
+<div class="eyebrow">A visual study chapter · React + JavaScript</div>
+<h1>State, References<br>& the UI</h1>
+<p>Understand why changing an object can change its data without changing its identity—and why React state should be updated immutably.</p>
+<div class="pills"><span class="pill">Beginner friendly</span><span class="pill">Examples + diagrams</span><span class="pill">Works offline</span><span class="pill">About 12 minutes</span></div>
+</header>
+<div class="layout">
+<aside class="toc"><strong>In this chapter</strong><nav>
+<a href="#start">1. The core idea</a><a href="#identity">2. Object identity</a><a href="#mutation">3. Mutation vs copy</a><a href="#is">4. Object.is()</a><a href="#react">5. React updates</a><a href="#old">6. Old state objects</a><a href="#gc">7. Garbage collection</a><a href="#examples">8. React examples</a><a href="#summary">9. Summary</a><a href="#quiz">10. Quiz + answers</a>
+</nav></aside>
+<main>
+<article id="start"><div class="label">01 · Start here</div><h2>The core idea</h2><p class="lead">A JavaScript object has both <strong>contents</strong> (its properties) and an <strong>identity</strong> (which particular object it is). These are related, but they are not the same thing.</p>
+<div class="callout"><strong>Remember:</strong> Changing a property does not create a new object. Creating a new object does.</div>
+<p>React state is a value held by React between renders. When state contains an object, React can compare the previous state value with the next one. For objects, that comparison tells React whether the value is the same object—not whether every property is unchanged.</p>
+<div class="diagram"><div class="diagram-title">Think of a variable as a label pointing to an object</div><div class="boxes"><div class="box"><b>Variable: user</b>holds a reference</div><span class="arrow">→</span><div class="box object"><b>Object A</b>name: "Alice"</div></div></div>
+</article>
+<article id="identity"><div class="label">02 · JavaScript objects</div><h2>Object identity and references</h2><p>When you assign an object to another variable, JavaScript copies the reference. Both variables can point to the same object.</p>
+<pre><code><span class="kw">const</span> user = { name: <span class="str">"Alice"</span> };
+<span class="kw">const</span> anotherUser = user; <span class="comment">// same object, shared reference</span>
+
+anotherUser.name = <span class="str">"Bob"</span>;
+console.log(user.name); <span class="comment">// "Bob" — the shared object changed</span>
+console.log(Object.is(user, anotherUser)); <span class="comment">// true</span></code></pre>
+<div class="diagram"><div class="diagram-title">Two labels, one object</div><div class="boxes"><div class="box">user</div><div class="box">anotherUser</div><span class="arrow">↘</span><div class="box object"><b>Object A</b>name: "Bob"</div></div></div>
+<p>The variables are separate labels, but their value is a reference to the same object. The object's identity stays the same when one of its properties changes.</p>
+</article>
+<article id="mutation"><div class="label">03 · Two different operations</div><h2>Mutation vs immutable update</h2>
+<div class="twocol"><div class="mini"><h3><span class="tag same">Mutation</span></h3><p>Edit a property on the existing object.</p><pre><code>user.name = <span class="str">"Bob"</span>;
+<span class="comment">// Object A is still Object A</span></code></pre><p>Contents changed; identity stayed the same.</p></div><div class="mini"><h3><span class="tag">New object</span></h3><p>Make a new object with updated contents.</p><pre><code><span class="kw">const</span> nextUser = {
+  ...user,
+  name: <span class="str">"Bob"</span>
+};
+<span class="comment">// nextUser is Object B</span></code></pre><p>Contents may be similar; identity is new.</p></div></div>
+<div class="diagram"><div class="diagram-title">Spread makes a shallow copy of the outer object</div><div class="boxes"><div class="box"><b>user</b>→ Object A<br>name: Alice</div><span class="arrow">+</span><div class="box"><b>Update</b>name: Bob</div><span class="arrow">→</span><div class="box object"><b>nextUser</b>→ Object B<br>name: Bob</div></div></div>
+<div class="callout warn"><strong>Shallow copy:</strong> <code>{ ...user }</code> creates a new outer object, but nested objects are still shared unless you copy those too.</div>
+<pre><code><span class="kw">const</span> state = { profile: { city: <span class="str">"Pune"</span> } };
+<span class="kw">const</span> next = { ...state };
+console.log(Object.is(state, next)); <span class="comment">// false: outer objects differ</span>
+console.log(Object.is(state.profile, next.profile)); <span class="comment">// true: nested object is shared</span></code></pre>
+</article>
+<article id="is"><div class="label">04 · Identity comparison</div><h2>What does <code>Object.is()</code> compare?</h2><p><code>Object.is(a, b)</code> answers whether two values are the same value. For objects and arrays, this means the same identity/reference. It does not walk through every property and compare them.</p>
+<div class="table-wrap"><table><thead><tr><th>Example</th><th>Result</th><th>Why</th></tr></thead><tbody><tr><td><code>Object.is(user, anotherUser)</code></td><td><strong>true</strong></td><td>Both variables point to Object A.</td></tr><tr><td><code>Object.is(user, { ...user })</code></td><td><strong>false</strong></td><td>The spread created a different outer object.</td></tr><tr><td><code>user.name = "Bob"</code>, then compare <code>user</code> with itself</td><td><strong>true</strong></td><td>Mutation changed a property, not identity.</td></tr></tbody></table></div>
+<div class="callout good"><strong>Conversation checkpoint:</strong> When asked whether <code>Object.is(user, newUser)</code> is false after <code>newUser = { ...user }</code>, the answer is <strong>false</strong> because the outer object reference changed. Same property values do not mean the same object.</div>
+<p>For primitive values like strings and numbers, <code>Object.is()</code> compares the values with a few precisely defined edge cases. For this chapter, focus on the object rule: same object means <code>true</code>; separately created objects mean <code>false</code>.</p></article>
+<article id="react"><div class="label">05 · React behavior</div><h2>How React decides whether to update</h2><p>When you call a state setter, React schedules state work. If the next state is identical to the current state according to <code>Object.is</code>, React can skip rendering that component's children as an optimization. React may still call the component before concluding it can bail out, so avoid relying on an exact render-call count.</p>
+<div class="steps"><div class="step"><strong>You call the setter</strong><br>For example, <code>setUser(nextUser)</code>.</div><div class="step"><strong>React compares state values</strong><br>For object state, same reference means <code>Object.is(previous, next)</code> is true.</div><div class="step"><strong>React can bail out</strong><br>If the value is the same, React may skip committing a visible update for that state change.</div><div class="step"><strong>A changed reference signals new state</strong><br>A new object lets React process the update and render from the new state.</div></div>
+<div class="callout bad"><strong>Why mutation is confusing:</strong> If you mutate the object and pass that same reference back, React sees the same state value. The object has changed behind React's back, so the UI may remain stale until some other render happens. A later render might reveal the mutation unexpectedly.</div>
+<p>React does not deep-scan your object to find mutations. An unrelated state update can cause a later render that reads the mutated object, which is one reason mutation leads to inconsistent behavior.</p></article>
+<article id="old"><div class="label">06 · Previous values</div><h2>What happens to the old state object?</h2><p>With an immutable update, the old object is not instantly erased. It remains a normal JavaScript object. Whether it stays available depends on whether anything can still reach it.</p>
+<div class="diagram"><div class="diagram-title">Before and after a state update</div><div class="boxes"><div class="box"><b>Before</b>React state → Object A<br>name: Alice</div><span class="arrow">→</span><div class="box object"><b>After update</b>React state → Object B<br>name: Bob</div></div><p style="text-align:center;color:var(--muted)">If no variable, closure, history entry, or other object still points to Object A, it can eventually be collected.</p></div>
+<p>Old objects may remain reachable on purpose—for example, an event handler closure, an undo-history array, or another variable may still reference them. JavaScript only treats an object as eligible for collection when it is no longer reachable from roots such as active variables and runtime references.</p></article>
+<article id="gc"><div class="label">07 · Memory basics</div><h2>Reachability and garbage collection</h2><p>JavaScript engines automatically reclaim memory for objects that are no longer reachable. You do not manually free ordinary objects.</p>
+<div class="twocol"><div class="mini"><h3>Still reachable</h3><p>A live reference leads to the object, so the engine must preserve it.</p><pre><code><span class="kw">const</span> saved = oldObject;
+<span class="comment">// saved still points to it</span></code></pre></div><div class="mini"><h3>No longer reachable</h3><p>No live reference can get to it, so it is eligible for garbage collection.</p><pre><code>oldObject = nextObject;
+<span class="comment">// if no other reference exists,
+// old object may be collected later</span></code></pre></div></div>
+<div class="callout">“Eligible” does not mean “removed immediately.” The garbage collector chooses when to reclaim memory. Exact timing is an implementation detail.</div>
+<p>Updating React state does not itself guarantee the old object disappears. React and JavaScript may hold references temporarily, and your own code may keep references for legitimate reasons.</p></article>
+<article id="examples"><div class="label">08 · Put it into practice</div><h2>React examples</h2><h3>Incorrect: mutate and reuse the same object</h3>
+<pre><code><span class="kw">function</span> Profile() {
+  <span class="kw">const</span> [user, setUser] = useState({ name: <span class="str">"Alice"</span> });
+
+  <span class="kw">function</span> changeName() {
+    user.name = <span class="str">"Bob"</span>; <span class="comment">// mutates existing state</span>
+    setUser(user);          <span class="comment">// same identity</span>
+  }
+
+  <span class="kw">return</span> &lt;button onClick={changeName}&gt;{user.name}&lt;/button&gt;;
+}</code></pre>
+<h3>Correct: create a new object</h3>
+<pre><code><span class="kw">function</span> Profile() {
+  <span class="kw">const</span> [user, setUser] = useState({ name: <span class="str">"Alice"</span> });
+
+  <span class="kw">function</span> changeName() {
+    setUser(previousUser =&gt; ({
+      ...previousUser,
+      name: <span class="str">"Bob"</span>
+    })); <span class="comment">// new object identity</span>
+  }
+
+  <span class="kw">return</span> &lt;button onClick={changeName}&gt;{user.name}&lt;/button&gt;;
+}</code></pre>
+<p>The functional setter form receives the latest state value, which is useful when the next state depends on the previous state. For nested state, copy each object along the path you change:</p>
+<pre><code>setUser(previous =&gt; ({
+  ...previous,
+  profile: {
+    ...previous.profile,
+    city: <span class="str">"Mumbai"</span>
+  }
+}));</code></pre>
+</article>
+<article id="summary"><div class="label">09 · Quick review</div><h2>Summary to remember</h2><ul><li>Objects have properties and identity; those are different things.</li><li>Assigning one object variable to another copies its reference, so both can point to one object.</li><li>Mutation changes the existing object; it does not make a new identity.</li><li>Object spread creates a new shallow outer object.</li><li><code>Object.is()</code> compares object identity, not nested properties.</li><li>React state setters use <code>Object.is</code> to detect identical state and can bail out; mutation can leave the UI stale or inconsistent.</li><li>Prefer immutable updates that return new objects for changed state.</li><li>Old objects can remain alive while reachable; unreachable objects become eligible for automatic garbage collection.</li></ul>
+<div class="callout good"><strong>One-sentence takeaway:</strong> Change state by making a new object, so React can see the new identity and render consistently.</div></article>
+<article id="quiz" class="quiz"><div class="label">10 · Check yourself</div><h2>Quiz</h2>
+<details><summary>1. Two variables point to the same object. If you mutate through one, what does the other see?</summary><p><strong>Answer:</strong> The changed property, because both variables refer to the same object.</p></details>
+<details><summary>2. What does <code>Object.is(user, { ...user })</code> return?</summary><p><strong>Answer:</strong> <code>false</code>. The spread creates a new outer object, so its identity differs.</p></details>
+<details><summary>3. Does changing <code>user.name</code> create a new object reference?</summary><p><strong>Answer:</strong> No. It changes a property on the existing object.</p></details>
+<details><summary>4. Why can <code>setUser(user)</code> after mutation fail to update the UI as expected?</summary><p><strong>Answer:</strong> The next state is the same object by identity. React can bail out of that state update, while the object has already been mutated. The UI may stay stale until another render.</p></details>
+<details><summary>5. Is <code>{ ...state }</code> a deep copy?</summary><p><strong>Answer:</strong> No. It is a shallow copy: the outer object is new, but nested objects are shared unless copied separately.</p></details>
+<details><summary>6. When can the old state object be garbage-collected?</summary><p><strong>Answer:</strong> When it is no longer reachable from any live reference. Collection may happen later; timing is chosen by the JavaScript engine.</p></details>
+<details><summary>7. Predict the output: <code>const a = {x: 1}; const b = a; b.x = 2; Object.is(a,b)</code></summary><p><strong>Answer:</strong> <code>true</code>. Both names still point to the same object, now with <code>x: 2</code>.</p></details>
+</article>
+</main></div><footer class="footer">React State &amp; Object References · Self-contained study chapter · Save this file and open it in any modern browser.</footer>
+</div>
+</body></html>

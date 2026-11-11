@@ -204,3 +204,9 @@ In the project, `optimizeImage` must also be imported or defined in this module.
 ## Key takeaways
 
 This component combines string processing, array methods, optional chaining, props, state, conditional rendering, event handling, accessibility, and image optimization. The central idea is that an image failure is represented in React state, so the UI can respond predictably instead of showing a broken image.
+
+---
+
+### Navigation
+* 📖 **[Module 02: Components, Props & Composition](../02-components-props-composition.md)**
+* 🌐 **[Interactive HTML Version](./02-avatar-fallback-handling.html)**

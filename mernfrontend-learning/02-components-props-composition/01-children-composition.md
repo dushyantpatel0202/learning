@@ -427,3 +427,10 @@ Try answering before reading the answer key.
 - A reusable `Card` owns the shared frame; its caller decides what goes inside.
 
 > **Explain it in your own words:** “A `Card` controls the container, and the caller supplies its children. React composition lets me put the pieces together without making one component inherit from another.”
+
+---
+
+### Navigation
+* 📖 **[Module 02: Components, Props & Composition](../02-components-props-composition.md)**
+* 🧩 **[Props Deep-Dive](./02-props-deep-dive.md)**
+* 🩺 **[DoctorCard Walkthrough](./03-doctor-card-walkthrough.md)**

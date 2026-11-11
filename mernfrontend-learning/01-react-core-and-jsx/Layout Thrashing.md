@@ -1,4 +1,4 @@
-# ⚡ Layout Thrashing & Forced Synchronous Reflow — Explained with Code
+﻿# ⚡ Layout Thrashing & Forced Synchronous Reflow — Explained with Code
 
 ---
 
@@ -34,7 +34,7 @@ In Module 01, you encounter this core warning about plain JavaScript:
 ```
 
 When you do this inside a loop:
-* The browser is stripped of its ability to optimize and batch updates.
+* The browser is [stripped of its ability](./Layout%20Thrashing/Stripped%20of%20Its%20Ability.md) to optimize and batch updates.
 * It is **forced to recalculate the entire page geometry (reflow)** and repaint the screen over and over again within a single animation frame.
 * A task that should take **0.5 milliseconds** can explode into **200+ milliseconds**, freezing the UI, dropping frames from 60fps to 5fps, and causing severe user-facing lag and stutter (**jank**).
 
@@ -310,5 +310,5 @@ Avoid reading any of these properties immediately after mutating DOM styles or c
 ### 🔗 Related Guides
 * 🐛 **[State Synchronization Bug](./State%20Synchronization%20Bug.md)** — What happens when manual DOM updates miss an element.
 * 🔄 **[Stay in Sync, Out of Sync & Stale Data](./Stay%20in%20Sync%20and%20Out%20of%20Sync.md)** — Why declarative synchronization matters.
-* ⚡ **[UI = f(state) & Declarative UI](./f(state).md)** — Why React treats UI as a mathematical function of state.
+* ⚡ **[UI = f(state) & Declarative UI](./f%28state%29.md)** — Why React treats UI as a mathematical function of state.
 * 📖 **[Module 01: React Core Architecture](../01-react-core-and-jsx.md)** — Main React architecture guide.

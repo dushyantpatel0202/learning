@@ -28,7 +28,7 @@ $$\text{UI} = f(\text{props}, \text{state})$$
 
 ---
 
-## 2. 🧩 [Props Deep-Dive](./helpher%2001/02-props-deep-dive.md)
+## 2. 🧩 [Props Deep-Dive](./02-components-props-composition/02-props-deep-dive.md)
 
 This section explains how props are passed between components and how a child receives them.
 
@@ -90,7 +90,7 @@ export function Card({ className = '', children }) {
 }
 ```
 
-> Helper note: For a deeper walkthrough of `children`, composition, and slot props, see [React `children`, Composition, and Slot Props](./helpher%2001/01-children-composition.md).
+> Helper note: For a deeper walkthrough of `children`, composition, and slot props, see [React `children`, Composition, and Slot Props](./02-components-props-composition/01-children-composition.md).
 
 Any component can wrap arbitrary content inside `<Card>` without `<Card>` needing to know what is inside:
 ```jsx
@@ -102,7 +102,7 @@ Any component can wrap arbitrary content inside `<Card>` without `<Card>` needin
 
 ---
 
-## 4. 🏥 [Real Project Code Walkthrough: `Avatar` & Fallback Handling](./helpher%2001/02-avatar-fallback-handling.html)
+## 4. 🏥 [Real Project Code Walkthrough: `Avatar` & Fallback Handling](./02-components-props-composition/02-avatar-fallback-handling.html) ([Markdown Guide](./02-components-props-composition/02-avatar-fallback-handling.md))
 
 Look at how our Doctor App handles doctor profile pictures in `frontend/src/components/ui.jsx`:
 
@@ -147,7 +147,7 @@ export function Avatar({ src, name, width = 200, className = '' }) {
 2. **Accessibility**: Uses `role="img"` and `aria-label={name}` for screen readers when rendering the fallback initials container.
 3. **Performance**: Takes a `width` prop to let Cloudinary transform and downscale the image dynamically, saving mobile bandwidth.
 
-## 5. 🏥 [Real Project Code Walkthrough: `DoctorCard.jsx`](./helpher%2001/03-doctor-card-walkthrough.md)
+## 5. 🏥 [Real Project Code Walkthrough: `DoctorCard.jsx`](./02-components-props-composition/03-doctor-card-walkthrough.md)
 
 Look at how `DoctorCard.jsx` breaks down complex logic into small, focused subcomponents:
 
@@ -254,3 +254,11 @@ Create a new reusable component:
 export function Badge({ variant = 'success', children }) { ... }
 ```
 Supporting variants: `'success'` (green), `'warning'` (amber), `'danger'` (red). Use it in `DoctorCard.jsx` to show whether a doctor is "Available Today" or "On Leave".
+
+---
+
+## 📚 Module 02 Companion Guides
+* 🧩 **[Props Deep-Dive](./02-components-props-composition/02-props-deep-dive.md)** — Passing callbacks and destructuring patterns.
+* 📦 **[React `children`, Composition, and Slot Props](./02-components-props-composition/01-children-composition.md)** — Layout shells and slot composition patterns.
+* 🔬 **[Real Project Code Walkthrough: `Avatar` & Fallback Handling (HTML)](./02-components-props-composition/02-avatar-fallback-handling.html)** / **[(Markdown)](./02-components-props-composition/02-avatar-fallback-handling.md)** — Graceful image degradation.
+* 🩺 **[Real Project Code Walkthrough: `DoctorCard.jsx`](./02-components-props-composition/03-doctor-card-walkthrough.md)** — Small, focused subcomponents pattern.
